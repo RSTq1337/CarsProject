@@ -33,6 +33,5 @@ spring:
           sharedCache:
             mode: ${UNSPECIFIED}
     show-sql: true
-
 server:
   port: ${PARSE_SERVICE_DEV_PORT}

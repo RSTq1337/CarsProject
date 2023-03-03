@@ -3,6 +3,7 @@ package com.parsem.parse.service.serivce
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.parsem.parse.service.dto.CarDataFromOnliner
+import com.parsem.parse.service.dto.entity.Car
 import com.parsem.parse.service.serivce.api.onliner.ApiOnlinerService
 import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service
@@ -59,7 +60,7 @@ class OnlinerApiTransferService (
                 true -> null
                 false ->  car.asJsonObject.get("specs").asJsonObject.get("engine").asJsonObject.get("power").asJsonObject.get("value").asString
             },
-            sellerNumber = fillingPhoneNumber( car.asJsonObject.get("author").asJsonObject.get("id").asString).orEmpty(),
+            sellerNumber = fillingPhoneNumber( car.asJsonObject.get("id").asString),
             priceUSD =  car.asJsonObject.get("price").asJsonObject.get("converted").asJsonObject.get("USD").asJsonObject.get("amount").asString,
             priceBYN =   car.asJsonObject.get("price").asJsonObject.get("converted").asJsonObject.get("BYN").asJsonObject.get("amount").asString,
             imagesOG = creatingListOfImages( car.asJsonObject, "OG"),
@@ -73,17 +74,20 @@ class OnlinerApiTransferService (
             url =  car.asJsonObject.get("url").asString
             )}.toSet()
         }
-    fun fillingPhoneNumber(userId: String): String? {
+    fun fillingPhoneNumber(userId: String): List<String>? {
         var listOfPhone: List<String> = mutableListOf();
         try {
             listOfPhone = apiOnlinerService.getPhoneNumberInfo(userId).block()!!;
+            for (phone in listOfPhone) {
+                logger.info(phone)
+            }
         } catch (ex: Exception) {
             logger.debug("No phoneNumber in user profile")
             return null;
         }
         return if (listOfPhone.isNotEmpty()) {
-            listOfPhone[0]
-        } else null
+            return listOfPhone
+        } else null;
     }
 
     private fun creatingListOfImages(currentCar: JsonObject, size: String) : Set<String> {
@@ -100,6 +104,39 @@ class OnlinerApiTransferService (
         currentCar.get("images").asJsonArray.forEach { images.add(it.asJsonObject.get(map[size]).asString) }
         return images
         }
+    fun fromCarDataFromOnlinerToCar(onlinerCar: CarDataFromOnliner): Car {
+        return Car(
+            onlinerCar.authorId,
+            onlinerCar.title,
+            onlinerCar.brand,
+            onlinerCar.model,
+            onlinerCar.generation,
+            onlinerCar.transmission,
+            onlinerCar.odometer,
+            onlinerCar.year,
+            onlinerCar.color,
+            onlinerCar.bodyType,
+            onlinerCar.state,
+            onlinerCar.driveTrain,
+            onlinerCar.modification,
+            onlinerCar.engineType,
+            onlinerCar.engineCapacity,
+            onlinerCar.engineTorque,
+            onlinerCar.enginePower,
+            onlinerCar.sellerNumber,
+            onlinerCar.priceUSD,
+            onlinerCar.priceBYN,
+            onlinerCar.imagesOG,
+            onlinerCar.images1900,
+            onlinerCar.images800,
+            onlinerCar.images600,
+            onlinerCar.images380,
+            onlinerCar.images100,
+            onlinerCar.images80,
+            onlinerCar.created,
+            onlinerCar.url,
+        )
+    }
 
     companion object {
         private val logger = LogManager.getLogger()

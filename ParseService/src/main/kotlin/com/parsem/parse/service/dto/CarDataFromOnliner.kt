@@ -18,7 +18,7 @@ data class CarDataFromOnliner(
     val engineCapacity: String? = "",
     val engineTorque: String? = "",
     val enginePower: String? = "",
-    val sellerNumber: String? = "",
+    val sellerNumber: List<String>? = mutableListOf(),
     val priceUSD: String = "",
     val priceBYN: String = "",
     val imagesOG: Set<String> = emptySet(),

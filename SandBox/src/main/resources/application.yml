@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    database: ${JPA_DB}
+    database-platform: ${DIALECT}
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        event:
+          merge:
+            entity_copy_observer: allow
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}

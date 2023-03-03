@@ -1,0 +1,23 @@
+server:
+  port: ${WEB_PROVIDER_DEV_PORT}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: ${PROFILE}
+  application:
+    name: web-provider
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    port: ${RABBITMQ_PORT}
+    template:
+      default-receive-queue: ${TEMP_DEFAULT_QUEUE}
+      exchange: ${TEMP_EXCHANGE}
+      routing-key: ${TEMP_ROUTING_KEY}
+      vhost: ${VHOST}
+
+
+

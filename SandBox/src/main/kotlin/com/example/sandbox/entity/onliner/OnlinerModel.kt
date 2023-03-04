@@ -1,11 +1,10 @@
-package com.example.sandbox.entity
+package com.example.sandbox.entity.onliner
 
 import jakarta.persistence.*
 
-
 @Entity
-@Table(name = "MODEL")
-data class Model(
+@Table(name = "ONLINER_MODEL")
+data class OnlinerModel(
     @Id
     @Column(name = "model_id")
     var modelId: Int = 0,
@@ -13,5 +12,5 @@ data class Model(
     var modelName: String = "",
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    var generations: Set<Generation> = mutableSetOf(),
+    var onlinerGenerations: Set<OnlinerGeneration> = mutableSetOf(),
 )

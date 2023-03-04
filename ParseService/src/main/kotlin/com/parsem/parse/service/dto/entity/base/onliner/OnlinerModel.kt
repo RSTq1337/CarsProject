@@ -1,10 +1,10 @@
-package com.parsem.parse.service.dto.entity
+package com.parsem.parse.service.dto.entity.base.onliner
 
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "MODEL")
-data class Model(
+data class OnlinerModel(
     @Id
     @Column(name = "model_id")
     var modelId: Int = 0,
@@ -12,5 +12,5 @@ data class Model(
     var modelName: String = "",
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    var generations: Set<Generation> = mutableSetOf(),
+    var onlinerGenerations: Set<OnlinerGeneration> = mutableSetOf(),
 )

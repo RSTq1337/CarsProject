@@ -1,34 +1,34 @@
 package com.example.sandbox.service
 
-import com.example.sandbox.entity.Brand
-import com.example.sandbox.entity.Generation
-import com.example.sandbox.entity.Model
-import com.example.sandbox.repo.OnlinerRepository
-import com.example.sandbox.repo.BrandRepository
+import com.example.sandbox.entity.onliner.OnlinerBrand
+import com.example.sandbox.entity.onliner.OnlinerGeneration
+import com.example.sandbox.entity.onliner.OnlinerModel
+import com.example.sandbox.repo.onliner.OnlinerRepository
+import com.example.sandbox.repo.onliner.OnlinerBrandRepository
 import com.google.gson.JsonParser
 import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service
 
 @Service
-class FillingsTablesService(
-    var onlinerRepository: OnlinerRepository,
-    var brandRepository: BrandRepository,
+class OnlinerFillingsTablesService(
+    private var onlinerRepository: OnlinerRepository,
+    private var onlinerBrandRepository: OnlinerBrandRepository,
 ) {
     fun execute() {
         var listOfIdBrands = getAllManufacturers().values
         listOfIdBrands.forEach {
             var brandResult = JsonParser.parseString(
-                onlinerRepository.getManufacturersInfo(it).block()
+                onlinerRepository.getManufacturersInfoById(it).block()
             ).asJsonObject
-            var newBrand = Brand(
+            var newBrand = OnlinerBrand(
                 brandId = brandResult["id"].asInt,
                 brandName = brandResult["slug"].asString
             )
             var modelResult = brandResult.get("models").asJsonArray
-            var models = mutableSetOf<Model>()
+            var models = mutableSetOf<OnlinerModel>()
             for (model in modelResult)
             {
-                var newModel = Model(
+                var newModel = OnlinerModel(
                     modelId = model.asJsonObject.get("id").asInt,
                     modelName = model.asJsonObject.get("slug").asString,
                     )
@@ -40,20 +40,20 @@ class FillingsTablesService(
                     ).block()
                 ).asJsonObject
                 var generationResult = generationAnswer.get("generations").asJsonArray
-                var generations = mutableSetOf<Generation>()
+                var generations = mutableSetOf<OnlinerGeneration>()
                 for (generation in generationResult)
                 {
-                        var newGeneration = Generation(
+                        var newGeneration = OnlinerGeneration(
                     generationId = generation.asJsonObject.get("id").asInt,
                     generationName = generation.asJsonObject.get("name").asString,
                         )
                     generations.add(newGeneration)
                 }
-                newModel.generations = generations
+                newModel.onlinerGenerations = generations
                 }
-            newBrand.models = models
+            newBrand.onlinerModels = models
             logger.info("Prepare to import "+newBrand.brandName)
-            brandRepository.save(newBrand)
+            onlinerBrandRepository.save(newBrand)
             logger.info("Imported")
         }
         logger.info("Import Done!")
@@ -63,7 +63,7 @@ class FillingsTablesService(
         var allManufacturersJson = JsonParser.parseString(onlinerRepository.getAllManufacturers().block()).asJsonArray
         var result = mutableMapOf<String, Int>()
         for(oneCar in allManufacturersJson) {
-            result.put(oneCar.asJsonObject.get("slug").asString, oneCar.asJsonObject.get("id").asInt)
+            result[oneCar.asJsonObject.get("slug").asString] = oneCar.asJsonObject.get("id").asInt
         }
         return result
     }

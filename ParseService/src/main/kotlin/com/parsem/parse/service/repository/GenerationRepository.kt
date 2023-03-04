@@ -1,7 +1,7 @@
 package com.parsem.parse.service.repository
 
-import com.parsem.parse.service.dto.entity.Generation
+import com.parsem.parse.service.dto.entity.base.onliner.OnlinerGeneration
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface GenerationRepository: JpaRepository<Generation, Int> {
+interface GenerationRepository: JpaRepository<OnlinerGeneration, Int> {
 }

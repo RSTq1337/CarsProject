@@ -45,5 +45,6 @@ class Car(
     var images80: Set<String> = mutableSetOf<String>(),
     var created: String = "",
     var url: String = "",
+    var source: String = ""
 
     )

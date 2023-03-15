@@ -1,4 +1,4 @@
-package com.example.sandbox.repo.onliner
+package com.example.sandbox.repo.onliner.db
 
 import com.example.sandbox.entity.onliner.OnlinerBrand
 import org.springframework.data.jpa.repository.JpaRepository

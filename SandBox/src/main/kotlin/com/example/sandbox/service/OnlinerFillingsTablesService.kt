@@ -4,7 +4,7 @@ import com.example.sandbox.entity.onliner.OnlinerBrand
 import com.example.sandbox.entity.onliner.OnlinerGeneration
 import com.example.sandbox.entity.onliner.OnlinerModel
 import com.example.sandbox.repo.onliner.OnlinerRepository
-import com.example.sandbox.repo.onliner.OnlinerBrandRepository
+import com.example.sandbox.repo.onliner.db.OnlinerBrandRepository
 import com.google.gson.JsonParser
 import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service

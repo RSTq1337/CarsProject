@@ -1,6 +1,5 @@
 package com.example.sandbox.repo.av
 
-import com.example.sandbox.repo.onliner.OnlinerRepository
 import org.apache.logging.log4j.LogManager
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
@@ -20,10 +19,19 @@ class AvRepository (
     }
 
     fun getManufacturersInfoByBrandName(brandName: String): Mono<String> {
-        logger.debug("Get Manufacturer Info for $brandName;")
+        logger.debug("Get Manufacturer Info by brand for $brandName;")
         return onlinerClient
             .get()
-            .uri("https://api.av.by/offer-types/cars/landings/$brandName")
+            .uri("/offer-types/cars/landings/$brandName")
+            .retrieve()
+            .bodyToMono(String::class.java)
+    }
+
+    fun getModelInfoByBrandNameAndModelName(brandName: String, modelName: String): Mono<String> {
+        logger.debug("Get Manufacturer Info by model for $modelName;")
+        return onlinerClient
+            .get()
+            .uri("/offer-types/cars/landings/$brandName/$modelName")
             .retrieve()
             .bodyToMono(String::class.java)
     }

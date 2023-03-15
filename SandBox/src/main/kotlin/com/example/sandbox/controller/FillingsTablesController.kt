@@ -26,7 +26,7 @@ class FillingsTablesController (
     fun avFillingsTablesRequest() {
 
 //        logger.info("Start fillings tables for av data")
-        avFillingsTablesService.getAllManufacturers()
+        avFillingsTablesService.getAllModels()
     }
 
     companion object {

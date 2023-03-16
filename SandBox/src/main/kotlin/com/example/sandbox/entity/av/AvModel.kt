@@ -10,8 +10,9 @@ data class AvModel(
     var modelId: Int = 0,
 
     var modelName: String = "",
-    var modelUrl: String = "",
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     var avGenerations: Set<AvGeneration> = mutableSetOf(),
-)
+) {
+    constructor(outModelName: String) : this(modelName = outModelName)
+}

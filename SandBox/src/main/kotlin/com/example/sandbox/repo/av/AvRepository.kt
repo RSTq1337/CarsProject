@@ -27,11 +27,18 @@ class AvRepository (
             .bodyToMono(String::class.java)
     }
 
-    fun getModelInfoByBrandNameAndModelName(brandName: String, modelName: String): Mono<String> {
-        logger.debug("Get Manufacturer Info by model for $modelName;")
+    fun getModelInfoByBrandId(brandId: Int): Mono<String> {
         return onlinerClient
             .get()
-            .uri("/offer-types/cars/landings/$brandName/$modelName")
+            .uri("/offer-types/cars/filters/main/init?brands[0][brand]=$brandId&price_currency=2")
+            .retrieve()
+            .bodyToMono(String::class.java)
+    }
+
+    fun getModelInfoByBrandNameAndModelName(brandId: Int, modelId: Int): Mono<String> {
+        return onlinerClient
+            .get()
+            .uri("/offer-types/cars/filters/main/init?brands[0][brand]=$brandId&brands[0][model]=$modelId&price_currency=2")
             .retrieve()
             .bodyToMono(String::class.java)
     }

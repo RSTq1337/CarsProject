@@ -15,7 +15,7 @@ class OnlinerFillingsTablesService(
     private var onlinerBrandRepository: OnlinerBrandRepository,
 ) {
     fun execute() {
-        var listOfIdBrands = getAllManufacturers().values
+        var listOfIdBrands = getDataForAllManufacturers().values
         listOfIdBrands.forEach {
             var brandResult = JsonParser.parseString(
                 onlinerRepository.getManufacturersInfoById(it).block()
@@ -59,7 +59,7 @@ class OnlinerFillingsTablesService(
         logger.info("Import Done!")
     }
 
-    private fun getAllManufacturers() : Map<String, Int> {
+    private fun getDataForAllManufacturers() : Map<String, Int> {
         var allManufacturersJson = JsonParser.parseString(onlinerRepository.getAllManufacturers().block()).asJsonArray
         var result = mutableMapOf<String, Int>()
         for(oneCar in allManufacturersJson) {

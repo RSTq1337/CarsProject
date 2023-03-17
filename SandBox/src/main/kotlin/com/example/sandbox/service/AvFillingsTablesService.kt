@@ -18,7 +18,7 @@ class AvFillingsTablesService(
     var avFixBrandRepository: AvFixBrandRepository,
     var avBrandRepository: AvBrandRepository
 ) {
-    fun getAllModels(): List<AvBrand> {
+    fun execute() {
         var setOfAllManufacturers = getAllManufacturers()
         setOfAllManufacturers.forEach { brand ->
             var setOfAllModelsForBrand = getAllModels(brand.brandId)
@@ -27,11 +27,11 @@ class AvFillingsTablesService(
                 model.avGenerations = setOfAllGenerationsForModel
             }
             brand.avModels = setOfAllModelsForBrand
+            logger.info("Prepare to import "+brand.brandName)
             avBrandRepository.save(brand)
-            logger.debug("${brand.brandName} saved.")
+            logger.info("${brand.brandName} saved.")
             }
-        logger.debug("done")
-        return mutableListOf<AvBrand>()
+        logger.info("done")
         }
 
 

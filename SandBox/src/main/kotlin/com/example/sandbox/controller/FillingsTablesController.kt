@@ -16,7 +16,6 @@ class FillingsTablesController (
     @GetMapping("/onliner")
     @ResponseStatus(code = HttpStatus.OK)
     fun onlinerFillingsTablesRequest() {
-
         logger.info("Start fillings tables for onliner data")
         onlinerFillingsTablesService.execute()
     }
@@ -24,9 +23,8 @@ class FillingsTablesController (
     @GetMapping("/av")
     @ResponseStatus(code = HttpStatus.OK)
     fun avFillingsTablesRequest() {
-
-//        logger.info("Start fillings tables for av data")
-        avFillingsTablesService.getAllModels()
+        logger.info("Start fillings tables for onliner data")
+        avFillingsTablesService.execute()
     }
 
     companion object {

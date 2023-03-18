@@ -1,5 +1,6 @@
 package com.parsem.parse.service.serivce.api.onliner
 
+import com.parsem.parse.service.dto.OnlinerSearchObject
 import com.parsem.parse.service.util.RequestHeadersUtil
 import org.apache.logging.log4j.LogManager
 import org.springframework.core.ParameterizedTypeReference
@@ -51,6 +52,19 @@ class ApiOnlinerService(
                 return Mono.empty()
         }
         return answer
+    }
+
+    fun getCarsByAllProperties(onlinerSearchObject: OnlinerSearchObject): Mono<String> {
+        return if(onlinerSearchObject.brands.size==1 && onlinerSearchObject.models.size==1 && onlinerSearchObject.generations.size==1) {
+            logger.debug("Search for ${onlinerSearchObject.brands} - brand")
+            webClient
+                .get()
+                .uri("/search/vehicles?car[0][manufacturer]=${onlinerSearchObject.brands.elementAt(0)}" +
+                        "&car[0][model]=${onlinerSearchObject.models.elementAt(0)}" +
+                        "&car[0][generation][0]=${onlinerSearchObject.generations.elementAt(0)}&extended=true&limit=50")
+                .retrieve()
+                .bodyToMono(String::class.java)
+        }else Mono.empty()
     }
 
     private companion object {

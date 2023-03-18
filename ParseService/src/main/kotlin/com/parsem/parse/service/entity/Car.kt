@@ -1,4 +1,4 @@
-package com.parsem.parse.service.dto.entity
+package com.parsem.parse.service.entity
 
 import jakarta.persistence.*
 

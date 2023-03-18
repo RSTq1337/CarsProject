@@ -1,9 +1,9 @@
-package com.parsem.parse.service.serivce
+package com.parsem.parse.service.serivce.onliner
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.parsem.parse.service.dto.CarDataFromOnliner
-import com.parsem.parse.service.dto.entity.Car
+import com.parsem.parse.service.entity.Car
 import com.parsem.parse.service.serivce.api.onliner.ApiOnlinerService
 import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service

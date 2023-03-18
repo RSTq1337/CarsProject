@@ -7,7 +7,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 
 
-@SpringBootApplication(exclude = [DataSourceAutoConfiguration::class])
+@SpringBootApplication
 @Import(
     RabbitConfiguration::class)
 class WebProviderApplication

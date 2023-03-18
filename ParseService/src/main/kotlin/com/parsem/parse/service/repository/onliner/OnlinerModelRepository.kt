@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface OnlinerModelRepository: JpaRepository<OnlinerModel, Int> {
-    fun findAllByModelName(modelName: String): OnlinerModel
+    fun findAllByModelName(modelName: String): List<OnlinerModel>
 }

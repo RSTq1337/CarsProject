@@ -2,10 +2,14 @@ package com.parsem.parse.service.serivce.api.onliner
 
 import com.parsem.parse.service.dto.CarSpecsRequest
 import com.parsem.parse.service.dto.OnlinerSearchObject
+import com.parsem.parse.service.entity.base.onliner.OnlinerGeneration
+import com.parsem.parse.service.entity.base.onliner.OnlinerModel
 import com.parsem.parse.service.repository.onliner.OnlinerBrandRepository
 import com.parsem.parse.service.repository.onliner.OnlinerGenerationRepository
 import com.parsem.parse.service.repository.onliner.OnlinerModelRepository
+import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service
+import java.util.stream.Collectors
 
 @Service
 class OnlinerCorrectPropertiesService(
@@ -15,23 +19,28 @@ class OnlinerCorrectPropertiesService(
     private val onlinerGenerationRepository: OnlinerGenerationRepository
 ) {
     fun getCarsByAllProperties(carSpecsRequest: CarSpecsRequest) {
-        val objectForSearch = OnlinerSearchObject(
-            mutableSetOf(searchBrand(carSpecsRequest.brands.elementAt(0))),
-            mutableSetOf(searchModel(carSpecsRequest.models.elementAt(0))),
-                mutableSetOf(searchGeneration(carSpecsRequest.generations.elementAt(0)))
-        )
-        apiOnlinerService.getCarsByAllProperties(objectForSearch)  //toDO continue here
+
+        val objectForSearch = searchBrand(
+            carSpecsRequest.brands.elementAt(0),
+            carSpecsRequest.models.elementAt(0),
+            carSpecsRequest.generations.elementAt(0))
+        var answerFromOnliner = apiOnlinerService.getCarsByAllProperties(objectForSearch)  //toDO continue here
+        logger.debug("probably done")
     }
 
-    private fun searchBrand(brand: String): Int {
-        return onlinerBrandRepository.findAllByBrandName(brand).brandId
+    private fun searchBrand(brandName: String, modelName: String, generationName: String): OnlinerSearchObject {
+        val foundedBrand = onlinerBrandRepository.findAllByBrandName(brandName)
+        val brandIdForRequest = foundedBrand.brandId
+        val modelIdForRequest = foundedBrand.onlinerModels
+            .stream().filter{ model -> model.modelName == modelName }.collect(Collectors.toList())[0].modelId
+
+
+        val generationIdForRequest = onlinerModelRepository.findAllByModelName(modelName)[0].onlinerGenerations
+            .stream().filter{ generation -> generation.generationName == generationName }.collect(Collectors.toList())[0].generationId
+        return OnlinerSearchObject(setOf(brandIdForRequest), setOf(modelIdForRequest), setOf(generationIdForRequest))
     }
 
-    private fun searchModel(model: String): Int {
-        return onlinerModelRepository.findAllByModelName(model).modelId
-    }
-
-    private fun searchGeneration(generation: String): Int {
-        return onlinerGenerationRepository.findAllByGenerationName(generation).generationId
+    private companion object {
+        val logger: org.apache.logging.log4j.Logger = LogManager.getLogger()
     }
 }

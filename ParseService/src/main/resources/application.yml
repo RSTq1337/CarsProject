@@ -26,12 +26,9 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-      hibernate:
-        format_sql: true
       jakarta:
         persistence:
           sharedCache:
             mode: ${UNSPECIFIED}
-    show-sql: true
 server:
   port: ${PARSE_SERVICE_DEV_PORT}

@@ -3,7 +3,7 @@ package com.parsem.parse.service.entity.base.onliner
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "MODEL")
+@Table(name = "ONLINER_MODEL")
 data class OnlinerModel(
     @Id
     @Column(name = "model_id")
@@ -11,6 +11,6 @@ data class OnlinerModel(
 
     var modelName: String = "",
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER )
     var onlinerGenerations: Set<OnlinerGeneration> = mutableSetOf(),
 )

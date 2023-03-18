@@ -11,6 +11,6 @@ data class OnlinerBrand(
 
     var brandName: String = "",
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER )
     var onlinerModels: Set<OnlinerModel> = mutableSetOf()
 )

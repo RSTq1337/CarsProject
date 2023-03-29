@@ -1,13 +1,12 @@
 package com.parsem.parse.service.serivce.api.onliner
 
-import com.parsem.parse.service.dto.OnlinerSearchObject
+import com.parsem.parse.service.dto.onliner.OnlinerSearchObject
 import com.parsem.parse.service.util.RequestHeadersUtil
 import org.apache.logging.log4j.LogManager
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 

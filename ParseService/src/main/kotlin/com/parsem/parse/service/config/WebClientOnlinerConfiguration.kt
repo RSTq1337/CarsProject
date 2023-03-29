@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 @Configuration
 class WebClientOnlinerConfiguration {
     private val BASE_URL = "https://ab.onliner.by/sdapi/ab.api/"
-    val TIMEOUT = 1000
+    private val TIMEOUT = 1000
 
     @Bean
     fun webClient(): WebClient? {

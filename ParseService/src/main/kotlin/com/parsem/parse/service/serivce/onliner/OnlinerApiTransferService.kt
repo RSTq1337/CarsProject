@@ -2,7 +2,7 @@ package com.parsem.parse.service.serivce.onliner
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.parsem.parse.service.dto.CarDataFromOnliner
+import com.parsem.parse.service.dto.onliner.CarDataFromOnliner
 import com.parsem.parse.service.entity.Car
 import com.parsem.parse.service.serivce.api.onliner.ApiOnlinerService
 import org.apache.logging.log4j.LogManager
@@ -72,7 +72,8 @@ class OnlinerApiTransferService (
             images80 = creatingListOfImages( car.asJsonObject, "80"),
             created =  car.asJsonObject.get("created_at").asString,
             url =  car.asJsonObject.get("url").asString
-            )}.toSet()
+            )
+        }.toSet()
         }
     fun fillingPhoneNumber(userId: String): List<String>? {
         var listOfPhone: List<String> = mutableListOf();

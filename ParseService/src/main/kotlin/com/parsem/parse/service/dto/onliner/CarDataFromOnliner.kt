@@ -1,4 +1,6 @@
-package com.parsem.parse.service.dto
+package com.parsem.parse.service.dto.onliner
+
+import com.parsem.parse.service.dto.Dto
 
 data class CarDataFromOnliner(
     val title: String = "",

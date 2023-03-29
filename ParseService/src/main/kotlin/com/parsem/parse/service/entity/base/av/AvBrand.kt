@@ -11,6 +11,6 @@ data class AvBrand(
 
     var brandName: String = "",
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER )
     var avModels: Set<AvModel> = mutableSetOf()
 )

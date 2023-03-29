@@ -36,10 +36,10 @@ services:
         SPRING_JPA_HIBERNATE_DDL_AUTO: update
   rabbitmq:
     container_name: rabbitmq
+    image: 'rstq1337/rabbitmq:v1'
     ports:
       - '5672:5672'
       - '15672:15672'
-    image: 'rabbitmq:3.10-management'
     restart: always
 #    volumes:
 #      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
